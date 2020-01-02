@@ -1,15 +1,15 @@
 package panasyuk.util;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class DirectoryInfo {
     private String path;
-    private List<String> fileNameList;
+    private Map<String, String> fileNameMap;
 
-    public DirectoryInfo(String path, List<String> fileNameList) {
+    public DirectoryInfo(String path, Map<String, String> fileNameMap) {
         this.path = path;
-        this.fileNameList = fileNameList;
+        this.fileNameMap = fileNameMap;
     }
 
     public String getPath() {
@@ -20,12 +20,12 @@ public class DirectoryInfo {
         this.path = path;
     }
 
-    public List<String> getFileNameList() {
-        return fileNameList;
+    public Map<String, String> getFileNameMap() {
+        return fileNameMap;
     }
 
-    public void setFileNameList(List<String> fileNameList) {
-        this.fileNameList = fileNameList;
+    public void setFileNameMap(Map<String, String> fileNameMap) {
+        this.fileNameMap = fileNameMap;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class DirectoryInfo {
         if (o == null || getClass() != o.getClass()) return false;
         DirectoryInfo that = (DirectoryInfo) o;
         return Objects.equals(path, that.path) &&
-                Objects.equals(fileNameList, that.fileNameList);
+                Objects.equals(fileNameMap, that.fileNameMap);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(path, fileNameList);
+        return Objects.hash(path, fileNameMap);
     }
 }

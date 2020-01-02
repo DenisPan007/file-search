@@ -1,23 +1,35 @@
 package panasyuk;
 
-import panasyuk.util.DirectoryInfo;
-import panasyuk.util.FileUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class FileSearcher {
 
 
     public static void main(String[] args) {
-        String filePath = parseFilePath(args);
-        FileUtil fileUtil = new FileUtil();
-        DirectoryInfo directoryInfo = fileUtil.getDirectoryInfoDto(filePath);
-        int size = directoryInfo.getFileNameList().size();
-        System.out.println(size + " files read from directory " + filePath);
-        directoryInfo.getFileNameList().forEach(System.out::println);
-        System.out.println("Hello, Alena!");
+        try {
+            String filePath = parseFilePath(args);
+            FileService fileService = new FileService();
+            List<String> textFileNames = new ArrayList<>(fileService.getTextFiles(filePath).keySet());
+            System.out.println(textFileNames.size() + " text files read from directory " + filePath);
+
+
+            try (Scanner scanner = new Scanner(System.in)) {
+                System.out.print("search> ");
+                String input = scanner.nextLine();
+                System.out.println("Input was: " + input);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     //todo add validation
     private static String parseFilePath(String[] args) {
+        if (args.length == 0){
+            throw new RuntimeException("No directory given to index");
+        }
         return args[0];
     }
 
