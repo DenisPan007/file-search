@@ -1,4 +1,4 @@
-package panasyuk;
+package panasyuk.service;
 
 import panasyuk.util.DirectoryInfo;
 import panasyuk.util.FileUtil;
