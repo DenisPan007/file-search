@@ -22,9 +22,9 @@ public class FileSearcher {
             List<String> textFileNames = new ArrayList<>(textFiles.keySet());
             System.out.println(textFileNames.size() + " text files read from directory " + filePath);
 
-            System.out.print("search> ");
             String input;
             while (true) {
+                System.out.print("search> ");
                 input = scanner.nextLine();
 
                 if (input.isEmpty()) {
@@ -42,7 +42,7 @@ public class FileSearcher {
                 } else {
                     searchResult.entrySet().stream()
                             .limit(10)
-                            .sorted((entry1, entry2) -> - Double.compare(entry1.getValue(), entry2.getValue()))
+                            .sorted((entry1, entry2) -> -Double.compare(entry1.getValue(), entry2.getValue()))
                             .collect(Collectors.toCollection(LinkedHashSet::new))
                             .forEach(entry -> System.out.println(entry.getKey() + ':' + String.format("%.1f%%", entry.getValue())));
                 }

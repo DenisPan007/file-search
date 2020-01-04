@@ -14,14 +14,14 @@ public class FileService {
 
     public Map<String, String> getTextFiles(String filePath) {
 
-        DirectoryInfo directoryInfo = getDirectoryInfoDto(filePath);
-        return directoryInfo.getFileNameMap().entrySet().stream()
+        Map<String, String> innerFiles = getInnerFiles(filePath);
+        return innerFiles.entrySet().stream()
                 .filter((fileItem) -> fileItem.getKey().endsWith(".txt"))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     //todo add  ability of using relative paths
-    public DirectoryInfo getDirectoryInfoDto(String pathStr) {
+    public Map<String, String> getInnerFiles(String pathStr) {
         File file = getFile(pathStr);
         try {
             File[] innerFilesList = file.listFiles();
@@ -29,14 +29,12 @@ public class FileService {
             for (File fileItem : innerFilesList) {
                 try {
                     innerFiles.put(getFileName(fileItem.getPath(), pathStr), getFileContent(fileItem));
-                }
-                catch (AccessDeniedException ex){
-                   //do nothing
+                } catch (AccessDeniedException ex) {
+                    //do nothing
                 }
             }
-            return new DirectoryInfo(pathStr, innerFiles);
+            return innerFiles;
         } catch (Exception e) {
-            //todo custom exception?
             throw new RuntimeException("Exception while reading file");
         }
     }
