@@ -9,10 +9,9 @@ import java.util.stream.Collectors;
 import static panasyuk.Constants.EXIT_FROM_CONSOLE;
 import static panasyuk.Constants.WORDS_DELIMITER;
 
-public class FileSearcher {
 
-
-    public static void main(String[] args) {
+public class FilesSearchController {
+    public void proceedFilesSearch(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             String filePath = parseFilePath(args);
             FileService fileService = new FileService();
@@ -21,6 +20,10 @@ public class FileSearcher {
             Map<String, String> textFiles = fileService.getTextFiles(filePath);
             List<String> textFileNames = new ArrayList<>(textFiles.keySet());
             System.out.println(textFileNames.size() + " text files read from directory " + filePath);
+
+            if (textFileNames.isEmpty()){
+                return;
+            }
 
             String input;
             while (true) {
@@ -52,19 +55,18 @@ public class FileSearcher {
         }
     }
 
-    private static boolean isAllFactorsEqualsZero(Map<String, Double> searchResult) {
+    private boolean isAllFactorsEqualsZero(Map<String, Double> searchResult) {
         return searchResult.entrySet().stream().allMatch(entry -> entry.getValue() == 0);
     }
 
-    private static String parseFilePath(String[] args) {
+    private String parseFilePath(String[] args) {
         if (args.length == 0) {
             throw new RuntimeException("No directory given to index");
         }
         return args[0];
     }
 
-    private static List<String> parseInputWords(String inputWords) {
+    private List<String> parseInputWords(String inputWords) {
         return Arrays.asList(inputWords.split(WORDS_DELIMITER));
     }
-
 }

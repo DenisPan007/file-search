@@ -20,7 +20,6 @@ public class FileService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    //todo add  ability of using relative paths
     public Map<String, String> getInnerFiles(String pathStr) {
         File file = getFile(pathStr);
         try {
@@ -43,7 +42,7 @@ public class FileService {
         return String.join("", Files.readAllLines(Paths.get(fileItem.getPath())));
     }
 
-    private File getFile(String pathStr) {
+    File getFile(String pathStr) {
         Path path = Paths.get(pathStr);
         File file = path.toFile();
         if (!file.exists()) {
