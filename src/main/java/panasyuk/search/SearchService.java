@@ -1,4 +1,4 @@
-package panasyuk.service;
+package panasyuk.search;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,11 +13,11 @@ public class SearchService {
 
     private static final int DECIMAL_PLACES = 1;
 
-    public Map<String, String> getFileNamesWithOverlapFactorMap(List<String> inputWords, Map<String, String> filesMap) {
-        String outputPattern = "%."+ DECIMAL_PLACES + "f%%";
+    public Map<String, Double> getFileNamesWithOverlapFactorMap(List<String> inputWords, Map<String, String> filesMap) {
+
         return filesMap.entrySet().stream()
                 .collect(Collectors.
-                        toMap(Map.Entry::getKey, entry -> String.format(outputPattern, getOverlapFactor(inputWords, entry.getValue()))) );
+                        toMap(Map.Entry::getKey, entry -> getOverlapFactor(inputWords, entry.getValue())));
 
     }
 
@@ -27,13 +27,13 @@ public class SearchService {
 
         int overlapCount = 0;
         List<String> fileContentArray = Arrays.asList(fileContent.split(WORDS_DELIMITER));
-        for (String word: inputWords){
-            if (fileContentArray.contains(word)){
+        for (String word : inputWords) {
+            if (fileContentArray.contains(word)) {
                 overlapCount++;
             }
 
         }
-        double result = 100 * (double)overlapCount/inputWordsCount;
+        double result = 100 * (double) overlapCount / inputWordsCount;
         return round(result);
     }
 

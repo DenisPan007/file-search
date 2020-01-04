@@ -1,4 +1,4 @@
-package panasyuk.util;
+package panasyuk.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +8,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class FileUtil {
+public class FileService {
+
+    public Map<String, String> getTextFiles(String filePath) {
+
+        DirectoryInfo directoryInfo = getDirectoryInfoDto(filePath);
+        return directoryInfo.getFileNameMap().entrySet().stream()
+                .filter((fileItem) -> fileItem.getKey().endsWith(".txt"))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
     //todo add  ability of using relative paths
     public DirectoryInfo getDirectoryInfoDto(String pathStr) {

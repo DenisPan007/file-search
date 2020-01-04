@@ -1,4 +1,4 @@
-package panasyuk.util;
+package panasyuk.file;
 
 
 public class FileNotFoundException extends RuntimeException {
